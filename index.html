@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeutschLernen A1 MVP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Halaman Home -->
+        <div id="home-view" class="view active">
+            <header class="hero">
+                <h1>DeutschLernen 🇩🇪</h1>
+                <p>Latihan Dasar Bahasa Jerman A1</p>
+            </header>
+            <div class="actions">
+                <div class="settings" style="margin-bottom: 0px; text-align: left;">
+                    <!-- AI Toggle -->
+                    <div class="ai-toggle-container" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 12px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--primary); border-radius: 8px;">
+                        <div>
+                            <span style="font-weight: 700; color: var(--primary);">Gunakan AI Generator ✨</span>
+                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Buat soal baru tak terbatas secara dinamis</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="ai-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <label for="topic-select" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Topik Latihan:</label>
+                    <select id="topic-select" class="type-select" style="margin-bottom: 12px;">
+                        <option value="all">Semua Topik (Campuran)</option>
+                        <optgroup label="🗣️ Percakapan & Topik Sehari-hari">
+                            <option value="1.1 Begrüßung & Vorstellung">1.1 Begrüßung & Vorstellung</option>
+                            <option value="1.2 Familie & Freunde">1.2 Familie & Freunde</option>
+                            <option value="1.3 Uhrzeiten & Tagesablauf">1.3 Uhrzeiten & Tagesablauf</option>
+                            <option value="1.4 Essen & Einkaufen">1.4 Essen & Einkaufen</option>
+                            <option value="1.5 Wohnung">1.5 Wohnung</option>
+                            <option value="1.6 Wetter">1.6 Wetter</option>
+                            <option value="1.7 Freizeit & Hobbys">1.7 Freizeit & Hobbys</option>
+                        </optgroup>
+                        <optgroup label="📚 Tata Bahasa (Grammatik)">
+                            <option value="2.1 Verben">2.1 Verben</option>
+                            <option value="2.2 Kata Benda & Artikel">2.2 Kata Benda & Artikel</option>
+                            <option value="2.3 Kasus (Fälle)">2.3 Kasus (Fälle)</option>
+                            <option value="2.4 Kalimat (Sätze)">2.4 Kalimat (Sätze)</option>
+                            <option value="2.5 Lainnya">2.5 Lainnya</option>
+                        </optgroup>
+                        <optgroup label="📖 Kosakata (Wortschatz)">
+                            <option value="3. Kosakata (Wortschatz)">3. Kosakata (Wortschatz)</option>
+                        </optgroup>
+                    </select>
+
+                    <label for="quiz-type" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Format Soal:</label>
+                    <select id="quiz-type" class="type-select">
+                        <option value="mixed">Campuran (10 Soal)</option>
+                        <option value="multiple_choice">Pilihan Ganda Saja (10 Soal)</option>
+                        <option value="short_answer">Isian Singkat Saja (10 Soal)</option>
+                    </select>
+                </div>
+                <button id="btn-start" class="btn primary-btn">▶️ Mulai Latihan</button>
+                <button id="btn-history" class="btn secondary-btn">📈 Lihat Progress</button>
+            </div>
+        </div>
+
+        <!-- Halaman Kuis -->
+        <div id="quiz-view" class="view hidden">
+            <header class="quiz-header">
+                <div class="progress-info">Soal <span id="current-question">1</span>/<span id="total-questions">10</span></div>
+                <div class="progress-bar-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </header>
+            <main class="question-container">
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <h2 id="question-text" style="margin-bottom: 0;">Frage?</h2>
+                    <button id="btn-speak" class="icon-btn" title="Dengarkan Pengucapan (Jerman)" aria-label="Play Audio">🔊</button>
+                </div>
+                <p id="question-translation" class="translation-text hidden"></p>
+                <div id="options-container" class="options">
+                    <!-- Options injected here -->
+                </div>
+                <div id="short-answer-container" class="short-answer hidden">
+                    <input type="text" id="short-answer-input" placeholder="Ketik jawaban Anda..." autocomplete="off">
+                </div>
+            </main>
+            <footer class="quiz-footer">
+                <button id="btn-next" class="btn primary-btn" disabled>Next</button>
+            </footer>
+        </div>
+
+        <!-- Halaman Hasil -->
+        <div id="result-view" class="view hidden">
+            <header class="result-header">
+                <h2>Latihan Selesai! 🎉</h2>
+            </header>
+            <div class="score-card">
+                <div class="score-circle">
+                    <span id="final-score">100</span>
+                </div>
+            </div>
+            <div class="summary">
+                <p>✅ Benar: <span id="correct-count">10</span></p>
+                <p>❌ Salah: <span id="wrong-count">0</span></p>
+            </div>
+            <div class="actions">
+                <button id="btn-review" class="btn secondary-btn">Lihat Pembahasan</button>
+                <button id="btn-restart" class="btn primary-btn">Ulangi</button>
+                <button id="btn-home" class="btn outline-btn">Home</button>
+            </div>
+        </div>
+
+        <!-- Halaman Progress -->
+        <div id="progress-view" class="view hidden">
+            <header class="quiz-header">
+                <h2>📈 Progress Belajar</h2>
+            </header>
+            <main class="progress-main">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Rata-rata Nilai</span>
+                        <span id="stat-avg" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Latihan</span>
+                        <span id="stat-total" class="stat-value">0</span>
+                    </div>
+                </div>
+                <div class="stat-card full-width">
+                    <span class="stat-label">Topik Paling Sering Salah</span>
+                    <span id="stat-weak-topic" class="stat-value text-danger">-</span>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="progress-chart"></canvas>
+                </div>
+            </main>
+            <footer class="quiz-footer">
+               <button id="btn-close-progress" class="btn primary-btn">Kembali ke Home</button>
+            </footer>
+        </div>
+
+        <!-- Modal Pembahasan -->
+        <div id="review-modal" class="modal hidden">
+            <div class="modal-content review-content">
+                <div class="modal-header">
+                    <h2>📖 Pembahasan</h2>
+                    <span id="close-review" class="close-btn">&times;</span>
+                </div>
+                <div id="review-list" class="review-list">
+                    <!-- Reviews injected here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="overlay hidden">
+        <div class="loader"></div>
+        <h3 style="color: white; margin-top: 20px;">AI sedang meracik 10 soal untuk Anda...</h3>
+        <p id="loading-timer" style="color: var(--primary); font-size: 1.5rem; font-weight: bold; margin-top: 15px;">⏱️ 10 detik</p>
+        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 8px;">Terima kasih sudah menunggu</p>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
