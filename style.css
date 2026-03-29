@@ -31,7 +31,8 @@ body {
 .app-container {
     width: 100%;
     max-width: 480px;
-    height: 100vh;
+    height: 100vh; /* fallback */
+    height: 100svh;
     background: var(--surface);
     position: relative;
     overflow: hidden;
@@ -55,6 +56,7 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: translateY(20px);
+    overflow-y: auto;
 }
 
 .view.active {
@@ -69,9 +71,12 @@ body {
 
 /* Home */
 #home-view {
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
+}
+.hero {
+    margin-top: 20px;
 }
 
 .hero h1 {

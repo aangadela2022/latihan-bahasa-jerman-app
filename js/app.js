@@ -5,7 +5,7 @@ let score = 0;
 let userAnswers = [];
 
 // Gemini API setup
-const GEMINI_API_KEY = "AIzaSyDR0LWoAMLWyO1Kka1NHeb6INiCeCC-QSk";
+const GEMINI_API_KEY = "AIzaSyA9PVk3GJNLITm2OrfVCFsgZP6Xeh5MoJs";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // DOM Elements

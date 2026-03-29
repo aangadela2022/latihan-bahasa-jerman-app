@@ -1,5 +1,5 @@
-const GEMINI_API_KEY = "AIzaSyDR0LWoAMLWyO1Kka1NHeb6INiCeCC-QSk";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_KEY = "AIzaSyA9PVk3GJNLITm2OrfVCFsgZP6Xeh5MoJs";
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 const prompt = `Buatlah 2 soal latihan tes bahasa Jerman tingkat A1 secara acak berdasarkan kriteria berikut:
 - Topik: "1.1 Begrüßung & Vorstellung"
