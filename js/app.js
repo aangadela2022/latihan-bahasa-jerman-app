@@ -195,11 +195,33 @@ function loadQuestion() {
         optionsContainer.classList.remove('hidden');
         
         q.options.forEach((opt, index) => {
+            const optWrapper = document.createElement('div');
+            optWrapper.style.display = 'flex';
+            optWrapper.style.alignItems = 'center';
+            optWrapper.style.gap = '8px';
+            
             const btn = document.createElement('button');
             btn.className = 'option-btn';
+            btn.style.flex = '1';
             btn.innerHTML = opt;
             btn.onclick = () => selectOption(index, btn);
-            optionsContainer.appendChild(btn);
+            
+            const btnAudio = document.createElement('button');
+            btnAudio.className = 'icon-btn';
+            btnAudio.style.width = '42px';
+            btnAudio.style.height = '42px';
+            btnAudio.style.flexShrink = '0';
+            btnAudio.title = "Dengarkan Pengucapan";
+            btnAudio.innerHTML = '🔊';
+            btnAudio.onclick = (e) => {
+                e.stopPropagation();
+                const cleanText = getCleanGermanText(opt);
+                playAudio(cleanText);
+            };
+            
+            optWrapper.appendChild(btn);
+            optWrapper.appendChild(btnAudio);
+            optionsContainer.appendChild(optWrapper);
         });
     }
 }
