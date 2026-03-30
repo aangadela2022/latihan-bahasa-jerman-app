@@ -5,7 +5,8 @@ let score = 0;
 let userAnswers = [];
 
 // Gemini API setup
-const GEMINI_API_KEY = "AIzaSyA9PVk3GJNLITm2OrfVCFsgZP6Xeh5MoJs";
+// API Key dimuat dengan aman dari js/config.js untuk mencegah kebocoran di GitHub
+const GEMINI_API_KEY = (window.CONFIG && window.CONFIG.GEMINI_API_KEY) ? window.CONFIG.GEMINI_API_KEY : "MASUKKAN_API_KEY_ANDA_DISINI";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // DOM Elements
@@ -419,7 +420,10 @@ Struktur JSON yang WAJIB digunakan untuk tiap soal (terdapat field "type", "topi
             })
         });
 
-        if (!response.ok) throw new Error("Gagal request API");
+        if (!response.ok) {
+            const errorBody = await response.text();
+            throw new Error(`Gagal request API: HTTP ${response.status} - ${errorBody}`);
+        }
 
         const data = await response.json();
         const textResponse = data.candidates[0].content.parts[0].text;
