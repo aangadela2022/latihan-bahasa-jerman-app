@@ -30,7 +30,7 @@ body {
 
 .app-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 800px;
     height: 100vh; /* fallback */
     height: 100svh;
     background: var(--surface);
@@ -49,7 +49,7 @@ body {
 .view {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    padding: 24px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -67,6 +67,10 @@ body {
 
 .view.hidden {
     display: none;
+}
+
+.hidden {
+    display: none !important;
 }
 
 /* Home */

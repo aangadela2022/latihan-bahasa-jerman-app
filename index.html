@@ -63,6 +63,14 @@
                     </select>
                 </div>
                 <button id="btn-start" class="btn primary-btn">▶️ Mulai Latihan</button>
+                
+                <!-- Loading Indicator Inline -->
+                <div id="loading-overlay" class="hidden" style="text-align: center; padding: 16px; background: rgba(79, 70, 229, 0.05); border: 1px solid var(--primary); border-radius: 12px;">
+                    <p style="color: var(--primary); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">⏳ AI sedang meracik soal...</p>
+                    <p id="loading-timer" style="color: var(--primary); font-size: 1.3rem; font-weight: bold; margin-bottom: 8px;">⏱️ 10 detik</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0;">Mohon tunggu sebentar</p>
+                </div>
+
                 <button id="btn-history" class="btn secondary-btn">📈 Lihat Progress</button>
             </div>
         </div>
@@ -157,14 +165,6 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- Loading Overlay -->
-    <div id="loading-overlay" class="overlay hidden">
-        <div class="loader"></div>
-        <h3 style="color: white; margin-top: 20px;">AI sedang meracik 10 soal untuk Anda...</h3>
-        <p id="loading-timer" style="color: var(--primary); font-size: 1.5rem; font-weight: bold; margin-top: 15px;">⏱️ 10 detik</p>
-        <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 8px;">Terima kasih sudah menunggu</p>
     </div>
 
     <!-- Memuat file konfigurasi dengan aman (API Key dsb) -->
