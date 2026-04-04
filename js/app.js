@@ -5,9 +5,7 @@ let score = 0;
 let userAnswers = [];
 
 // Gemini API setup
-// API Key dimuat dengan aman dari js/config.js untuk mencegah kebocoran di GitHub
-const GEMINI_API_KEY = (window.CONFIG && window.CONFIG.GEMINI_API_KEY) ? window.CONFIG.GEMINI_API_KEY : "MASUKKAN_API_KEY_ANDA_DISINI";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+// API Key akan dimuat secara dinamis saat runtime dari input user untuk mencegah kebocoran di GitHub
 
 // DOM Elements
 const views = {
@@ -34,6 +32,8 @@ const selectQuizType = document.getElementById('quiz-type');
 const selectTopic = document.getElementById('topic-select');
 const aiToggle = document.getElementById('ai-toggle');
 const loadingOverlay = document.getElementById('loading-overlay');
+const apiKeyContainer = document.getElementById('api-key-container');
+const apiKeyInput = document.getElementById('gemini-api-key');
 
 // Quiz Elements
 const questionText = document.getElementById('question-text');
@@ -429,6 +429,23 @@ Struktur JSON yang WAJIB digunakan untuk tiap soal (terdapat field "type", "topi
   }
 ]`;
 
+    let currentKey = "";
+    if (apiKeyInput && apiKeyInput.value.trim() !== '') {
+        currentKey = apiKeyInput.value.trim();
+        localStorage.setItem('gemini_api_key', currentKey);
+    } else if (window.CONFIG && window.CONFIG.GEMINI_API_KEY) {
+        currentKey = window.CONFIG.GEMINI_API_KEY;
+    }
+
+    if (!currentKey || currentKey === "MASUKKAN_API_KEY_ANDA_DISINI" || currentKey.includes("CONTOH") || currentKey === "AIzaSyA6-oLGGreORU0j5Wq8cPUgPCkWIoO9bvs") {
+        alert("Silakan masukkan Gemini API Key yang valid terlebih dahulu untuk menggunakan fitur AI.");
+        aiToggle.checked = false;
+        if (apiKeyContainer) apiKeyContainer.classList.add('hidden');
+        return null; // fallback will be triggered
+    }
+
+    const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${currentKey}`;
+
     try {
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
@@ -550,6 +567,21 @@ btnSpeak.addEventListener('click', () => {
 });
 
 // Event Listeners
+
+if (apiKeyInput) {
+    const savedKey = localStorage.getItem('gemini_api_key') || (window.CONFIG && window.CONFIG.GEMINI_API_KEY) || "";
+    if (savedKey && savedKey !== "MASUKKAN_API_KEY_ANDA_DISINI" && !savedKey.includes("CONTOH") && savedKey !== "AIzaSyA6-oLGGreORU0j5Wq8cPUgPCkWIoO9bvs") {
+        apiKeyInput.value = savedKey;
+    }
+}
+
+aiToggle.addEventListener('change', () => {
+    if(aiToggle.checked) {
+        if (apiKeyContainer) apiKeyContainer.classList.remove('hidden');
+    } else {
+        if (apiKeyContainer) apiKeyContainer.classList.add('hidden');
+    }
+});
 
 btnStart.addEventListener('click', startQuiz);
 btnNext.addEventListener('click', nextQuestion);

@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = "AIzaSyA9PVk3GJNLITm2OrfVCFsgZP6Xeh5MoJs";
+const GEMINI_API_KEY = "AIzaSyA6-oLGGreORU0j5Wq8cPUgPCkWIoO9bvs";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 const prompt = `Buatlah 2 soal latihan tes bahasa Jerman tingkat A1 secara acak berdasarkan kriteria berikut:

@@ -31,6 +31,15 @@
                         </label>
                     </div>
 
+                    <!-- Input API Key (Muncul saat AI aktif) -->
+                    <div id="api-key-container" class="hidden" style="margin-bottom: 12px; padding: 12px; background: rgba(255, 193, 7, 0.1); border: 1px solid #ffc107; border-radius: 8px;">
+                        <label for="gemini-api-key" style="display: block; margin-bottom: 8px; font-weight: 600; color: #b08200; font-size: 0.9rem;">Gemini API Key Anda (Untuk Akses AI):</label>
+                        <input type="password" id="gemini-api-key" placeholder="AIzaSy..." style="width: 100%; padding: 8px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: monospace;">
+                        <div style="font-size: 0.75rem; color: #856404; line-height: 1.4;">
+                            * Key akan disimpan aman secara lokal di browser Anda. <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: #4F46E5; text-decoration: underline;">Dapatkan API Key Gratis</a>
+                        </div>
+                    </div>
+
                     <label for="topic-select" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main);">Topik Latihan:</label>
                     <select id="topic-select" class="type-select" style="margin-bottom: 12px;">
                         <option value="all">Semua Topik (Campuran)</option>
